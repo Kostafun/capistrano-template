@@ -39,10 +39,12 @@ module Capistrano
 
         def upload_as_file
           if file_changed?
+            set :last_template_changed, true
             remote_handler.info "copying to: #{full_to_path}"
             remote_handler.upload! io, full_to_path
           else
             remote_handler.info "File #{full_to_path} on host #{host} not changed"
+            set :last_template_changed, false
           end
         end
 
